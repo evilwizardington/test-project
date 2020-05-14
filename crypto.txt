@@ -7,9 +7,9 @@ PLAINTEXT=$(cat mail.txt | base64 -w0)
   -H "Content-Type: application/json" | jq .ciphertext -r > mail.encrypted
   
   # Decrypt file
-  curl -v "https://cloudkms.googleapis.com/v1/projects/$DEVSHELL_PROJECT_ID/locations/global/keyRings/$KEYRING_NAME/cryptoKeys/$CRYPTOKEY_NAME:decrypt" 
-  -d "{\"ciphertext\":\"$(cat mail.encrypted)\"}" 
-  -H "Authorization:Bearer $(gcloud auth application-default print-access-token)" 
+  curl -v "https://cloudkms.googleapis.com/v1/projects/$DEVSHELL_PROJECT_ID/locations/global/keyRings/$KEYRING_NAME/cryptoKeys/$CRYPTOKEY_NAME:decrypt"\
+  -d "{\"ciphertext\":\"$(cat mail.encrypted)\"}"\
+  -H "Authorization:Bearer $(gcloud auth application-default print-access-token)"\
   -H "Content-Type:application/json" | jq .plaintext -r | base64 -d
 
   # Backup File
